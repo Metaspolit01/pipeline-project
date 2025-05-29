@@ -1,0 +1,6 @@
+---
+plugin: terraform
+project_path: . # directory where terraform.tfstate is located
+
+groups:
+  webserver-ip: "tags.Role == 'pipeline'"
