@@ -28,6 +28,8 @@ jobs:
     - name: Run ansible
       run: |
         ansible-playbook -i inventory.ini playbook.yaml
+
+   
        
       
         
