@@ -41,7 +41,7 @@ jobs:
     - name: Setup SSH key
       run: |
         mkdir -p ~/.ssh
-        printf '%s\n' "${{ secrets.MINE_LAPTOP_PEM }}" > ~/.ssh/mine-laptop.pem
+        printf '%s\n' "${{ MINE_LOAPTOP_PEM }}" > ~/.ssh/mine-laptop.pem
         chmod 600 ~/.ssh/mine-laptop.pem
    
 
