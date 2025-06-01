@@ -41,8 +41,9 @@ jobs:
     - name: Setup SSH key
       run: |
         mkdir -p ~/.ssh
-        echo "${{ secrets.MINE_LAPTOP_PEM }}" > ~/.ssh/mine-laptop.pem
-        chmod 600 ~/.ssh/mine-laptop.pem    
+        printf '%s\n' "${{ secrets.MINE_LAPTOP_PEM }}" > ~/.ssh/mine-laptop.pem
+        chmod 600 ~/.ssh/mine-laptop.pem
+   
 
     - name: Run ansible
       run: |
