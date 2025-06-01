@@ -3,53 +3,55 @@
   hosts: ec2_instance
   become: true
   gather_facts: true
+
   tasks:
-- name: update apt cache
-  apt:
-    update_cache: yes
+    - name: Update apt cache
+      apt:
+        update_cache: yes
 
-- name: upgrade all packages
-  apt:
-    upgrade: true
-- name: create a python venv
-  command: python3 -m venv /home/ubuntu/my-venv
-  args:
-    creates: /home/ubuntu/my-venv/bin/activate
+    - name: Upgrade all packages
+      apt:
+        upgrade: true
 
-- name: Install required Python packages in virtualenv
-  shell: |
-    source /home/ubuntu/my-venv/bin/activate
-    pip install --upgrade pip
-    pip install botocore boto3 flask requests
-  args:
-    executable: /bin/bash
+    - name: Create a Python virtual environment
+      command: python3 -m venv /home/ubuntu/my-venv
+      args:
+        creates: /home/ubuntu/my-venv/bin/activate
 
+    - name: Install required Python packages in virtualenv
+      shell: |
+        source /home/ubuntu/my-venv/bin/activate
+        pip install --upgrade pip
+        pip install botocore boto3 flask requests
+      args:
+        executable: /bin/bash
 
-- name: Install and configure Docker and Kubernetes
-  shell: |
-    #installing docker 
-    sudo apt update
-    sudo apt install -y docker.io
-    sudo systemctl enable docker --now
-    sudo usermod -aG docker $USER
+    - name: Install and configure Docker and Kubernetes
+      shell: |
+        # Installing Docker 
+        sudo apt update
+        sudo apt install -y docker.io
+        sudo systemctl enable docker --now
+        sudo usermod -aG docker $USER
 
-     #installing minikube 
-    sudo apt update -y
-    sudo apt install curl apt-transport-https -y
-    curl -O https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-    sudo cp minikube-linux-amd64 /usr/local/bin/minikube
-    sudo chmod 755 /usr/local/bin/minikube
-    echo "minikube version"
-     
-     #installing kubectl
-    sudo snap install kubectl --classic
+        # Installing Minikube 
+        sudo apt update -y
+        sudo apt install curl apt-transport-https -y
+        curl -O https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+        sudo cp minikube-linux-amd64 /usr/local/bin/minikube
+        sudo chmod 755 /usr/local/bin/minikube
+        echo "minikube version"
 
+        # Installing kubectl
+        sudo snap install kubectl --classic
 
-    minikube start --driver=docker
-    if minikube status | grep -q "Running"; then
-      echo "Minikube is running"
-    else
-      echo "Minikube is not running" 
+        # Starting Minikube
+        minikube start --driver=docker
+        if minikube status | grep -q "Running"; then
+          echo "Minikube is running"
+        else
+          echo "Minikube is not running"
+        fi
+      args:
+        executable: /bin/bash
 
-  args:
-    executable: /bin/bash
