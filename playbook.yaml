@@ -32,7 +32,7 @@
           - boto3
           - flask
           - requests
-       virtualenv: /home/ubuntu/my-venv
+        virtualenv: /home/ubuntu/my-venv
     - name: Create a Python virtual environment
       command: python3 -m venv /home/ubuntu/my-venv
       args:
