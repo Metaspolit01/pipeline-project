@@ -17,7 +17,7 @@ jobs:
     - name: terraform config
       uses: hashicorp/setup-terraform@v3
       with:
-        terrafom_version: 1.6.0
+        terraform_version: 1.6.0
         
     - name: aws-cli
       uses: aws-actions/configure-aws-credentials@v2
@@ -29,13 +29,14 @@ jobs:
     - name: Run Terraform
       run: |
         terraform init
+        terraform validate
         terraform plan
         terraform apply -auto-approve  
 
     - name: Install ansible
       run: |
         sudo apt update -y
-        sudo apt install -y ansible
+        sudo apt install ansible -y
 
     - name: Run ansible
       run: |
