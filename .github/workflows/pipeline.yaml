@@ -38,6 +38,12 @@ jobs:
         sudo apt update -y
         sudo apt install ansible -y
 
+    - name: Setup SSH key
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.MINE_LAPTOP_PEM }}" > ~/.ssh/mine-laptop.pem
+        chmod 600 ~/.ssh/mine-laptop.pem    
+
     - name: Run ansible
       run: |
         ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.ini playbook.yaml
