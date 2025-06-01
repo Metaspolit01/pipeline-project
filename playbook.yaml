@@ -25,31 +25,31 @@
     executable: /bin/bash
 
 
-  - name: Install and configure Docker and Kubernetes
-    shell: |
-      #installing docker 
-     sudo apt update
-     sudo apt install -y docker.io
-     sudo systemctl enable docker --now
-     sudo usermod -aG docker $USER
+- name: Install and configure Docker and Kubernetes
+  shell: |
+    #installing docker 
+    sudo apt update
+    sudo apt install -y docker.io
+    sudo systemctl enable docker --now
+    sudo usermod -aG docker $USER
 
      #installing minikube 
-     sudo apt update -y
-     sudo apt install curl apt-transport-https -y
-     curl -O https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-     sudo cp minikube-linux-amd64 /usr/local/bin/minikube
-     sudo chmod 755 /usr/local/bin/minikube
-     echo "minikube version"
+    sudo apt update -y
+    sudo apt install curl apt-transport-https -y
+    curl -O https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    sudo cp minikube-linux-amd64 /usr/local/bin/minikube
+    sudo chmod 755 /usr/local/bin/minikube
+    echo "minikube version"
      
      #installing kubectl
-     sudo snap install kubectl --classic
+    sudo snap install kubectl --classic
 
 
-     minikube start --driver=docker
-     if minikube status | grep -q "Running"; then
-        echo "Minikube is running"
-      else
-        echo "Minikube is not running" 
+    minikube start --driver=docker
+    if minikube status | grep -q "Running"; then
+      echo "Minikube is running"
+    else
+      echo "Minikube is not running" 
 
-    args:
-      executable: /bin/bash
+  args:
+    executable: /bin/bash
